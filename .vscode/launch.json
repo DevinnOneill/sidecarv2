@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Backend (Node.js)",
+            "cwd": "${workspaceFolder}/TYPESCRIPTS",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Frontend (Chrome)",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/TYPESCRIPTS/frontend"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Run and Debug Full Stack",
+            "configurations": [
+                "Launch Backend (Node.js)",
+                "Launch Frontend (Chrome)"
+            ]
+        }
+    ]
+}
