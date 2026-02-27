@@ -20,13 +20,13 @@ router.post('/login', (req: Request<{}, {}, LoginRequest>, res: Response) => {
 
 router.get('/users', (_req: Request, res: Response) => {
   const users = Object.values(USERS).map(u => ({
-    id:            u.id,
-    name:          u.name,
-    role:          u.role,
+    id: u.id,
+    name: u.name,
+    role: u.role,
     rateCommunity: u.rateCommunity,
-    email:         u.email,
+    email: u.email,
   }));
-  res.json({ success: true, data: users });
+  res.json({ success: true, data: { users } });
 });
 
 export default router;

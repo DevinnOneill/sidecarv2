@@ -7,13 +7,13 @@ const router = Router();
 router.get('/', (req: Request, res: Response) => {
   const { status, aor, nec, paygrade } = req.query as Record<string, string>;
   let results = [...BILLETS];
-  if (status)   results = results.filter(b => b.status   === (status.toUpperCase()   as BilletStatus));
-  if (aor)      results = results.filter(b => b.aor      === (aor.toUpperCase()      as AOR));
-  if (nec)      results = results.filter(b => b.necRequired === nec);
+  if (status) results = results.filter(b => b.status === (status.toUpperCase() as BilletStatus));
+  if (aor) results = results.filter(b => b.aor === (aor.toUpperCase() as AOR));
+  if (nec) results = results.filter(b => b.necRequired === nec);
   if (paygrade) results = results.filter(b => b.paygrade === paygrade);
   res.json({
-    success: true, data: results, total: results.length,
-    vacant:    results.filter(b => b.status === 'VACANT').length,
+    success: true, data: { billets: results }, total: results.length,
+    vacant: results.filter(b => b.status === 'VACANT').length,
     projected: results.filter(b => b.status === 'PROJECTED').length,
   });
 });

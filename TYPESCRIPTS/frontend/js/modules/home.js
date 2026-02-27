@@ -6,21 +6,21 @@ async function loadHome() {
     wsContent(`
       <div class="stat-grid stat-grid-4 mb16">
         <div class="stat-block">
-          <div class="stat-n">${dash.sailors_total}</div>
+          <div class="stat-n">${dash.sailorsTotal}</div>
           <div class="stat-l">Sailors in Portfolio</div>
         </div>
         <div class="stat-block">
-          <div class="stat-n red">${dash.critical_rollers}</div>
+          <div class="stat-n red">${dash.criticalRollers}</div>
           <div class="stat-l">Critical Rollers</div>
           <div class="stat-sub">PRD ≤ 30 days</div>
         </div>
         <div class="stat-block">
-          <div class="stat-n amber">${dash.active_rollers}</div>
+          <div class="stat-n amber">${dash.activeRollers}</div>
           <div class="stat-l">Active Rollers</div>
           <div class="stat-sub">PRD 31–90 days</div>
         </div>
         <div class="stat-block">
-          <div class="stat-n gold">${dash.orders_in_qa}</div>
+          <div class="stat-n gold">${dash.ordersInQa}</div>
           <div class="stat-l">Orders in QA</div>
         </div>
       </div>
@@ -57,7 +57,7 @@ async function loadHome() {
               <div class="ps-label">Draft</div>
             </div>
             <div class="pipeline-stage active" onclick="setMod('orders')">
-              <div class="ps-count gold">${dash.orders_in_qa}</div>
+              <div class="ps-count gold">${dash.ordersInQa}</div>
               <div class="ps-label">QA Review</div>
             </div>
             <div class="pipeline-stage" onclick="setMod('orders')">
@@ -96,7 +96,7 @@ async function loadHome() {
         </div>
       </div>
     `);
-  } catch(e) {
+  } catch (e) {
     wsContent('<div class="empty-state"><div class="empty-state-icon">⚠️</div><div class="empty-state-title">Could not load dashboard</div><div class="empty-state-sub">Check that the backend is running: uvicorn app.main:app</div></div>');
   }
 }

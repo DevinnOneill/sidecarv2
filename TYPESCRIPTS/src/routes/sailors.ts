@@ -15,7 +15,7 @@ router.get('/', (req: Request, res: Response) => {
   if (rate) results = results.filter(s => s.rate.includes(rate.toUpperCase()));
   if (detailerId) results = results.filter(s => s.detailerId === detailerId);
   results.sort((a, b) => (ROLLER_ORDER[a.rollerStatus] ?? 9) - (ROLLER_ORDER[b.rollerStatus] ?? 9));
-  res.json({ success: true, data: results, total: results.length });
+  res.json({ success: true, data: { sailors: results }, total: results.length });
 });
 
 router.get('/:id', (req: Request, res: Response) => {
@@ -31,7 +31,7 @@ router.get('/:id/applications', (req: Request, res: Response) => {
 
 router.get('/:id/emails', (req: Request, res: Response) => {
   const threads = EMAIL_THREADS.filter(e => e.sailorId === req.params.id);
-  res.json({ success: true, data: threads, total: threads.length });
+  res.json({ success: true, data: { threads }, total: threads.length });
 });
 
 export default router;

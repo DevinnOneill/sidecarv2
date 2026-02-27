@@ -15,7 +15,7 @@ router.get('/', (req: Request, res: Response) => {
     if (b.priority === 'HIGH' && a.priority !== 'HIGH') return 1;
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
-  res.json({ success: true, data: results, total: results.length });
+  res.json({ success: true, data: { announcements: results }, total: results.length });
 });
 
 router.get('/:id', (req: Request, res: Response) => {
