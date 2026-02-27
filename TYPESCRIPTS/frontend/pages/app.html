@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIDECAR</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/main.css">
+<link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body class="app-body">
+
+<!-- ── NOTIFICATION TOAST ──────────────────────────────────── -->
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- ── APP SHELL ──────────────────────────────────────────── -->
+<div class="app-shell">
+
+  <!-- RAIL (52px) -->
+  <nav class="rail" id="rail">
+    <div class="rail-top">
+      <div class="rail-logo" title="SIDECAR">⚓</div>
+      <div class="rail-divider"></div>
+      <button class="rail-btn active" data-mod="home"       title="Home">🏠</button>
+      <button class="rail-btn"        data-mod="sailors"    title="Sailors">👤</button>
+      <button class="rail-btn"        data-mod="billets"    title="Billets">🗂</button>
+      <button class="rail-btn"        data-mod="orders"     title="Orders"><span class="rail-badge" id="badge-orders"></span>📄</button>
+      <button class="rail-btn"        data-mod="avails"     title="Avails"><span class="rail-badge" id="badge-avails"></span>📋</button>
+      <button class="rail-btn"        data-mod="email"      title="Email"><span class="rail-badge" id="badge-email"></span>✉️</button>
+      <button class="rail-btn"        data-mod="messages"   title="Messages">💬</button>
+      <button class="rail-btn"        data-mod="analytics"  title="Analytics">📊</button>
+      <button class="rail-btn"        data-mod="audit"      title="Audit Log">🔒</button>
+    </div>
+    <div class="rail-bottom">
+      <button class="rail-btn" id="userBtn" title="User Profile">
+        <span class="rail-avatar" id="railAvatar">?</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- LEFT PANEL (248px) -->
+  <aside class="left-panel" id="leftPanel">
+    <div class="lp-header">
+      <span class="lp-title" id="lpTitle">Home</span>
+      <button class="lp-search-btn" id="lpSearchBtn" title="Search">🔍</button>
+    </div>
+    <div class="lp-search-bar" id="lpSearch" style="display:none">
+      <input type="text" placeholder="Search..." id="lpSearchInput" class="lp-search-input">
+    </div>
+    <div class="lp-filters" id="lpFilters"></div>
+    <div class="lp-list" id="lpList"></div>
+  </aside>
+
+  <!-- WORKSPACE -->
+  <main class="workspace" id="workspace">
+    <!-- Topbar -->
+    <div class="ws-topbar">
+      <div class="ws-breadcrumb" id="wsBreadcrumb">SIDECAR · Home</div>
+      <div class="ws-integrations">
+        <span class="int-pill" title="NSIPS Live"><span class="int-dot green"></span>NSIPS</span>
+        <span class="int-pill" title="Outlook Connected"><span class="int-dot blue"></span>Outlook</span>
+        <span class="int-pill" title="Salesforce Connected"><span class="int-dot purple"></span>Salesforce</span>
+      </div>
+      <div class="ws-user-info" id="wsUserInfo">
+        <span id="wsUserName">—</span>
+        <span class="role-pill" id="wsUserRole">—</span>
+        <button class="logout-btn" onclick="logout()">↩</button>
+      </div>
+    </div>
+
+    <!-- Workspace tabs -->
+    <div class="ws-tabs" id="wsTabs" style="display:none">
+      <div class="ws-tabs-inner" id="wsTabsInner"></div>
+    </div>
+
+    <!-- Main content area -->
+    <div class="ws-content" id="wsContent">
+      <!-- Populated by JS based on active module -->
+    </div>
+
+    <!-- AI Agent Bar -->
+    <div class="agent-bar">
+      <span class="agent-icon">⚡</span>
+      <input type="text" class="agent-input" id="agentInput"
+        placeholder="Ask SIDECAR AI — policy check, MILPERSMAN, sea/shore, order drafts…">
+      <button class="agent-btn" onclick="runAgent()">Ask</button>
+    </div>
+  </main>
+
+</div>
+
+<script src="/static/js/api.js"></script>
+<script src="/static/js/app.js"></script>
+<script src="/static/js/modules/home.js"></script>
+<script src="/static/js/modules/sailors.js"></script>
+<script src="/static/js/modules/billets.js"></script>
+<script src="/static/js/modules/orders.js"></script>
+<script src="/static/js/modules/analytics.js"></script>
+</body>
+</html>

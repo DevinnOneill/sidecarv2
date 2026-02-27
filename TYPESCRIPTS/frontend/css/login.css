@@ -1,0 +1,100 @@
+/* SIDECAR — Login Page Styles */
+
+.login-page { overflow: hidden; }
+
+.login-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse at 20% 50%, #0d2040 0%, #070b14 60%);
+}
+.login-overlay {
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a5f' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.login-container {
+  position: relative; z-index: 10;
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px 20px; gap: 20px;
+}
+
+.login-header { display: flex; align-items: center; gap: 18px; text-align: left; }
+.login-anchor { font-size: 52px; line-height: 1; }
+.login-title {
+  font-family: var(--font-head); font-size: 48px; font-weight: 800;
+  color: var(--gold); letter-spacing: 4px; line-height: 1;
+}
+.login-subtitle { font-size: 14px; color: var(--text2); margin-top: 4px; }
+
+.login-fouo {
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 5px 14px; border: 1px solid var(--border2);
+  border-radius: 20px;
+}
+
+/* CAC Banner */
+.cac-banner {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 20px;
+  width: 100%; max-width: 760px;
+}
+.cac-icon { font-size: 24px; }
+.cac-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.cac-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.cac-badge {
+  margin-left: auto; padding: 4px 10px; border-radius: var(--radius-xs);
+  background: var(--amberl); color: var(--amber);
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; white-space: nowrap;
+}
+
+.role-select-label {
+  font-size: 11px; color: var(--text3); letter-spacing: 1px;
+  text-transform: uppercase; font-weight: 600;
+  width: 100%; max-width: 760px;
+}
+
+/* Role Grid */
+.role-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 10px;
+  width: 100%; max-width: 760px;
+}
+@media (max-width: 600px) { .role-grid { grid-template-columns: repeat(2,1fr); } }
+
+.role-card {
+  background: var(--bg2); border: 2px solid var(--border2);
+  border-radius: var(--radius); padding: 18px 14px;
+  cursor: pointer; transition: all .18s; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.role-card:hover {
+  border-color: var(--gold); background: var(--goldll);
+  transform: translateY(-2px);
+}
+.role-card.selected {
+  border-color: var(--gold); background: var(--goldl);
+}
+.rc-icon { font-size: 26px; }
+.rc-title { font-family: var(--font-head); font-size: 12px; font-weight: 700; color: var(--text); }
+.rc-sub { font-size: 10px; color: var(--text2); line-height: 1.4; }
+.rc-id { font-family: var(--font-mono); font-size: 9px; color: var(--text3); }
+
+/* Enter Button */
+.enter-btn {
+  display: none; padding: 12px 40px;
+  background: var(--gold); color: #1a1000;
+  border: none; border-radius: var(--radius-sm);
+  font-family: var(--font-head); font-size: 14px; font-weight: 700;
+  cursor: pointer; letter-spacing: 1px;
+  transition: all .15s; margin-top: 4px;
+}
+.enter-btn:hover { background: #d4b560; transform: translateY(-1px); }
+.enter-btn.visible { display: block; }
+
+.login-footer {
+  display: flex; justify-content: space-between; gap: 24px;
+  font-size: 10px; color: var(--text3);
+  width: 100%; max-width: 760px;
+  padding-top: 8px; border-top: 1px solid var(--border2);
+}
