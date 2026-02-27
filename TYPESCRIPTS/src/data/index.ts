@@ -198,9 +198,9 @@ export const MESSAGES: Record<string, Message[]> = {
 // ── ANNOUNCEMENTS ─────────────────────────────────────────────────────────────
 
 export const ANNOUNCEMENTS: Announcement[] = [
-  { id: 'ANN001', title: 'Spring 2026 Cycle Opens 01 MAR', body: 'Review all Sailor preferences in MNA before actioning new orders this cycle. Confirm billet match scores against updated NEC tables before submission.', category: 'CYCLE_GUIDANCE', audience: 'ALL', author: 'CAPT Rhodes', date: '2026-02-24', priority: 'HIGH', readCount: 47 },
-  { id: 'ANN002', title: 'Updated MILPERSMAN 1306-106 Tables', body: 'NEC prescriptions for CTN, IT, and IS rates have been updated. Detailers must verify against new tables before writing orders for any E-5/E-6 assignment effective 01 MAR 2026.', category: 'POLICY_UPDATE', audience: 'DETAILERS', author: 'C. Miller', date: '2026-02-20', priority: 'NORMAL', readCount: 31 },
-  { id: 'ANN003', title: 'New Navy-365 Integration Beta', body: 'Sidecar now supports direct Outlook calendar syncing for detailer interview scheduling. Please report any sync lag to the program manager.', category: 'SYSTEM_NOTICE', audience: 'ALL', author: 'K. Brooks', date: '2026-02-26', priority: 'NORMAL', readCount: 12 },
+  { id: 'ANN001', title: 'Spring 2026 Cycle Readiness', body: 'Review all Sailor preferences in MNA before actioning new orders this cycle. Confirm billet match scores against updated NEC tables before submission.', category: 'CYCLE_GUIDANCE', audience: 'ALL', author: 'CAPT Rhodes', date: '2026-02-24', priority: 'HIGH', readCount: 47 },
+  { id: 'ANN002', title: 'NEW: AI-Generated Orders Pre-QA', body: 'Sidecar now supports Pre-QA checks including JTRS compliance and Sea/Shore rotation verification to reduce QA return rates.', category: 'SYSTEM_NOTICE', audience: 'DETAILER', author: 'K. Brooks', date: '2026-02-26', priority: 'NORMAL', readCount: 12 },
+  { id: 'ANN003', title: 'Updated MILPERSMAN 1306-106 Tables', body: 'NEC prescriptions for IT and LS rates have been updated. Verify against new tables effective 01 MAR.', category: 'POLICY_UPDATE', audience: 'ALL', author: 'C. Miller', date: '2026-02-20', priority: 'NORMAL', readCount: 31 },
 ];
 
 // ── FLEET READINESS ───────────────────────────────────────────────────────────
@@ -232,28 +232,31 @@ export const AUDIT_LOG: AuditEntry[] = [
 export const EMAIL_THREADS: EmailThread[] = [
   {
     id: 'ET001', sailorId: 'S001', from: 'r.martinez@navy.mil', subject: 'Requesting Orders / Billet Options — IT2 Martinez',
-    preview: 'Good morning, I am reaching out regarding my upcoming PRD...',
-    date: '2026-02-25', tags: ['E-5', 'IT2', 'Orders/Billet', 'PRD 22d'], grade: 'E-5', category: 'ORDERS', prdDays: 22,
+    preview: 'Initial identification of billet match for NEC 2779…',
+    date: 'Feb 25 2026', tags: ['E-5', 'IT2', 'Orders/Billet', 'PRD 22d'], grade: 'E-5', category: 'ORDERS', prdDays: 22,
+    teamHistory: true,
     messages: [
       { from: 'IT2 Martinez', role: 'SAILOR', body: 'Good morning, I am reaching out regarding my upcoming PRD of March 2026. I would like to discuss billet options, specifically East Coast billets with NEC 2779. My top preference is Norfolk area.', date: '2026-02-25T09:14:00' },
-      { from: 'J. Davis', role: 'DETAILER', body: 'IT2 Martinez — I have identified a strong match at NISC Little Creek (NEC 2779, East Coast preference). Orders are being prepared. Stand by for further guidance.', date: '2026-02-25T11:40:00' },
+      { from: 'J. Davis', role: 'DET', body: 'IT2 Martinez — I have identified a strong match at NISC Little Creek (NEC 2779, East Coast preference). Orders are being prepared. JTR Ch 5 authorizes full entitlement for this PCS move.', date: '2026-02-25T11:40:00' },
+      { from: 'IT2 Martinez', role: 'SAILOR', body: 'Copy, Detailer. Requesting confirmation on HHG entitlements for that AOR. My family is currently in Norfolk.', date: '2026-02-25T15:00:00' }
     ]
   },
   {
-    id: 'ET002', sailorId: 'S008', from: 'e.omalley@navy.mil', subject: 'HUMS Request for O\'Malley, Erin',
+    id: 'ET002', sailorId: 'S001', from: 'medical.reviewer@navy.mil', subject: 'Medical Review Requested for Martinez, R.',
+    preview: 'Hold placed due to pending dental clearance…',
+    date: 'Feb 12 2026', tags: ['E-5', 'IT2', 'MED HOLD'], grade: 'E-5', category: 'MEDICAL', prdDays: 22,
+    teamHistory: true,
+    messages: [
+      { from: 'Dr. Simmons', role: 'MED', body: 'Temporary hold placed until dental surgery on 2/15 is cleared.', date: '2026-02-12T10:00:00' },
+      { from: 'J. Davis', role: 'DET', body: 'Holding orders submission until dental green light.', date: '2026-02-12T14:00:00' }
+    ]
+  },
+  {
+    id: 'ET003', sailorId: 'S008', from: 'e.omalley@navy.mil', subject: 'HUMS Request for O\'Malley, Erin',
     preview: 'Resubmitting humanitarian assignment documentation per latest medical advice...',
-    date: '2026-02-26', tags: ['E-5', 'ITS2', 'HUMS', 'PRD 5d'], grade: 'E-5', category: 'HUMS', prdDays: 5,
+    date: 'Feb 26 2026', tags: ['E-5', 'ITS2', 'HUMS', 'PRD 5d'], grade: 'E-5', category: 'HUMS', prdDays: 5,
     messages: [
       { from: 'ITS2 O\'Malley', role: 'SAILOR', body: 'Detailer, following up on my previous HUMS request. I have uploaded the updated medical certification for my father. Please review as my PRD is in 5 days.', date: '2026-02-26T08:30:00' },
-    ]
-  },
-  {
-    id: 'ET003', sailorId: 'S006', from: 'a.bakshi@navy.mil', subject: 'LS1 Bakshi — USS Constitution preference',
-    preview: 'Checking status of my application for the Boston billet...',
-    date: '2026-02-27', tags: ['E-6', 'LS1', 'Boston'], grade: 'E-6', category: 'ORDERS', prdDays: 45,
-    messages: [
-      { from: 'LS1 Bakshi', role: 'SAILOR', body: 'Detailer, I saw the vacancy for USS Constitution. Since I am a local recruit from that area, I would very much like to be considered.', date: '2026-02-27T09:00:00' },
-      { from: 'R. Chen', role: 'DETAILER', body: 'LS1 Bakshi, I have drafted your orders. We are pending final approval for the funding line.', date: '2026-02-27T10:15:00' }
     ]
   }
 ];
