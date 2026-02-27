@@ -49,4 +49,3 @@ The app is pre-loaded with **10 sailors**, **10 billets**, and a full **Orders/A
 - **Debug Path**: Visit `/api/debug` to see raw data states.
 
 ---
-*UNCLASSIFIED // FOR OFFICIAL USE ONLY*
