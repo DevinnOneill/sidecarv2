@@ -1,150 +1,121 @@
-// ─────────────────────────────────────────────────────────────────
-// SIDECAR — Shared Types
-// Single source of truth. Backend and frontend both use these.
-// ─────────────────────────────────────────────────────────────────
+/**
+ * SIDECAR — Shared TypeScript Types
+ * Single source of truth for every data shape across front and back end.
+ * Both the API and the UI consume from this file.
+ */
 
-// ── Enums ─────────────────────────────────────────────────────────
+// ── ENUMS ────────────────────────────────────────────────────────────────────
 
-export type RollerType   = 'SEA_ROLLER' | 'SHORE_ROLLER' | 'FLEXIBLE' | 'LOCKED';
-export type RollerStatus = 'CRITICAL' | 'ACTIVE' | 'UPCOMING' | 'PENDING' | 'ORDERED';
-export type OrderStatus  = 'DRAFT' | 'PRE_QA_CHECKED' | 'QA_REVIEW' | 'RETURNED' | 'APPROVED' | 'EXECUTED' | 'CANCELLED';
-export type AvailType    = 'HUMANITARIAN' | 'MEDICAL' | 'OPERATIONAL' | 'HUMS' | 'LIMDU';
-export type AvailStatus  = 'SUBMITTED' | 'TRIAGED' | 'ROUTED' | 'IN_PROGRESS' | 'RESOLVED' | 'CANCELLED';
-export type AvailPriority = 'URGENT' | 'ROUTINE';
-export type BilletStatus = 'VACANT' | 'FILLED' | 'PROJECTED' | 'FROZEN' | 'FLAGGED';
-export type PreQAResult  = 'PASS' | 'ADVISORY' | 'FAIL';
-export type ChannelType  = 'RATE' | 'BROADCAST' | 'DIRECT';
-
-export type UserRole =
+export type Role =
   | 'DETAILER'
   | 'QA_REVIEWER'
   | 'PLACEMENT_COORD'
   | 'PROGRAM_MANAGER'
-  | 'MEDICAL_REVIEWER'
   | 'LEADERSHIP'
+  | 'MEDICAL_REVIEWER'
   | 'SAILOR';
 
-// ── Core Entities ─────────────────────────────────────────────────
+export type RollerType   = 'SEA_ROLLER' | 'SHORE_ROLLER' | 'FLEXIBLE' | 'LOCKED';
+export type RollerStatus = 'CRITICAL' | 'ACTIVE' | 'UPCOMING' | 'PENDING' | 'ORDERED';
+export type OrderStatus  = 'DRAFT' | 'PRE_QA' | 'QA_REVIEW' | 'RETURNED' | 'APPROVED' | 'EXECUTED';
+export type OrderType    = 'PCS' | 'PCA' | 'TAD' | 'TEMDU';
+export type BilletStatus = 'FILLED' | 'VACANT' | 'PROJECTED' | 'FROZEN' | 'FLAGGED';
+export type AvailType    = 'HUMANITARIAN' | 'MEDICAL' | 'HUMS' | 'EARLY_RETURN' | 'DISLOCATION';
+export type AvailStatus  = 'SUBMITTED' | 'TRIAGED' | 'ROUTED' | 'IN_PROGRESS' | 'RESOLVED';
+export type AvailPriority = 'URGENT' | 'HIGH' | 'ROUTINE';
+export type PreQAResult  = 'PASS' | 'ADVISORY' | 'FAIL';
+export type AOR          = 'LANT' | 'PACFLT' | 'WESTPAC' | 'NAVCENT' | 'NAVEUR' | 'SHORE' | 'CONUS';
+export type AnnouncementCategory = 'POLICY_UPDATE' | 'CYCLE_GUIDANCE' | 'SYSTEM_NOTICE' | 'URGENT_ACTION';
+export type AnnouncementAudience = 'ALL' | 'DETAILERS' | 'QA' | 'LEADERSHIP' | 'PLACEMENT' | string;
+
+// ── USER / AUTH ───────────────────────────────────────────────────────────────
+
+export interface User {
+  id:             string;
+  name:           string;
+  role:           Role;
+  rateCommunity:  string;
+  email:          string;
+  sailorId?:      string;  // only for SAILOR role
+}
+
+export interface LoginRequest  { userId: string; }
+export interface LoginResponse { token: string; user: User; }
+
+// ── SAILOR ────────────────────────────────────────────────────────────────────
 
 export interface Sailor {
   id:                  string;
   edipi:               string;
-  last_name:           string;
-  first_name:          string;
+  lastName:            string;
+  firstName:           string;
   rate:                string;
   paygrade:            string;
-  nec_primary:         string;
-  nec_secondary?:      string;
+  necPrimary:          string;
+  necSecondary?:       string;
   clearance:           string;
   command:             string;
   uic:                 string;
-  prd:                 string;         // ISO date string
-  eaos:                string;         // ISO date string
-  roller_type:         RollerType;
-  roller_status:       RollerStatus;
-  sea_months_served:   number;
-  sea_months_prescribed: number;
-  detailer_id?:        string;
-  avails_open:         number;
-  applications_12mo:   number;
-  medical_hold?:       boolean;
+  prd:                 string;   // ISO date string
+  eaos:                string;   // ISO date string
+  rollerType:          RollerType;
+  rollerStatus:        RollerStatus;
+  seaMonthsServed:     number;
+  seaMonthsPrescribed: number;
+  detailerId:          string;
+  availsOpen:          number;
+  applications12mo:    number;
+  medicalHold?:        boolean;
 }
 
-export interface Billet {
-  id:             string;
-  title:          string;
-  command:        string;
-  uic:            string;
-  nec_required:   string;
-  paygrade:       string;
-  aor:            string;
-  location:       string;
-  status:         BilletStatus;
-  days_vacant:    number;
-  incumbent_prd?: string;
-  match_score?:   number;
-}
-
-export interface Order {
-  id:              string;
-  sailor_id:       string;
-  sailor_name:     string;
-  gaining_command: string;
-  gaining_uic:     string;
-  billet_id:       string;
-  order_type:      string;
-  detach_date:     string;
-  rnltd:           string;
-  tour_length:     number;
-  funding_line?:   string;
-  status:          OrderStatus;
-  preqa_passed:    number;
-  preqa_advisory:  number;
-  preqa_failed:    number;
-  detailer_id:     string;
-  submitted_date:  string;
-  return_reason?:  string;
-}
-
-export interface Avail {
-  id:           string;
-  sailor_id:    string;
-  sailor_name:  string;
-  type:         AvailType;
-  priority:     AvailPriority;
-  status:       AvailStatus;
-  routed_to?:   string;
-  days_open:    number;
-  description:  string;
-  medical_hold?: boolean;
-}
-
-export interface User {
-  id:              string;
-  name:            string;
-  role:            UserRole;
-  rate_community:  string;
-  email:           string;
-  sailor_id?:      string;  // only for SAILOR role
-}
-
-export interface Application {
-  billet_id: string;
+export interface SailorApplication {
+  billetId:  string;
   command:   string;
   date:      string;
-  status:    'PENDING' | 'SUBMITTED' | 'NOT_SELECTED' | 'WITHDRAWN';
+  status:    'PENDING' | 'SUBMITTED' | 'NOT_SELECTED' | 'SELECTED' | 'WITHDRAWN';
   detailer:  string;
   notes:     string;
 }
 
-export interface Channel {
-  id:     string;
-  name:   string;
-  type:   ChannelType;
-  unread: number;
+// ── BILLET ────────────────────────────────────────────────────────────────────
+
+export interface Billet {
+  id:            string;
+  title:         string;
+  command:       string;
+  uic:           string;
+  necRequired:   string;
+  paygrade:      string;
+  aor:           AOR;
+  location:      string;
+  status:        BilletStatus;
+  daysVacant:    number;
+  incumbentPrd?: string;
+  matchScore?:   number;
 }
 
-export interface Message {
-  id:   string;
-  user: string;
-  role: string;
-  text: string;
-  ts:   string;
-}
+// ── ORDER ─────────────────────────────────────────────────────────────────────
 
-export interface Announcement {
-  id:        string;
-  title:     string;
-  body:      string;
-  category:  'POLICY' | 'CYCLE' | 'SYSTEM' | 'URGENT';
-  audience:  string;
-  author:    string;
-  date:      string;
-  read?:     number;
-  total?:    number;
+export interface Order {
+  id:             string;
+  sailorId:       string;
+  sailorName:     string;
+  gainingCommand: string;
+  gainingUic:     string;
+  billetId:       string;
+  orderType:      OrderType;
+  detachDate:     string;
+  rnltd:          string;
+  tourLength:     number;
+  fundingLine?:   string;
+  status:         OrderStatus;
+  preqaPassed:    number;
+  preqaAdvisory:  number;
+  preqaFailed:    number;
+  detailerId:     string;
+  submittedDate:  string;
+  returnReason?:  string;
 }
-
-// ── Pre-QA ────────────────────────────────────────────────────────
 
 export interface PreQACheck {
   check:     string;
@@ -154,60 +125,132 @@ export interface PreQACheck {
 }
 
 export interface PreQARequest {
-  sailor_id:    string;
-  billet_id:    string;
-  order_type:   string;
+  sailorId:     string;
+  billetId:     string;
+  orderType:    OrderType;
   rnltd:        string;
-  tour_length:  number;
-  funding_line?: string;
+  tourLength:   number;
+  fundingLine?: string;
 }
 
 export interface PreQAResponse {
-  sailor_id:  string;
-  billet_id:  string;
-  checks:     PreQACheck[];
-  summary:    { passed: number; advisory: number; failed: number };
-  can_submit: boolean;
-  message:    string;
+  sailorId:  string;
+  billetId:  string;
+  checks:    PreQACheck[];
+  summary:   { passed: number; advisory: number; failed: number };
+  canSubmit: boolean;
+  message:   string;
 }
 
-// ── API Response wrappers ─────────────────────────────────────────
+// ── AVAIL ─────────────────────────────────────────────────────────────────────
 
-export interface ApiResponse<T> {
-  data:    T;
-  status:  'ok' | 'error';
-  message?: string;
+export interface Avail {
+  id:          string;
+  sailorId:    string;
+  sailorName:  string;
+  type:        AvailType;
+  priority:    AvailPriority;
+  status:      AvailStatus;
+  routedTo?:   string;
+  daysOpen:    number;
+  description: string;
+  medicalHold?: boolean;
 }
 
-export interface SailorsResponse {
-  sailors: Sailor[];
-  total:   number;
+// ── MESSAGING ─────────────────────────────────────────────────────────────────
+
+export interface Channel {
+  id:     string;
+  name:   string;
+  type:   'RATE' | 'BROADCAST' | 'DIRECT';
+  unread: number;
 }
 
-export interface BilletsResponse {
-  billets:   Billet[];
-  total:     number;
-  vacant:    number;
-  projected: number;
+export interface Message {
+  id:   string;
+  user: string;
+  role: string;
+  text: string;
+  ts:   string;  // ISO datetime
 }
 
-export interface OrdersResponse {
-  orders:    Order[];
-  total:     number;
-  by_status: Record<OrderStatus, number>;
+// ── EMAIL ─────────────────────────────────────────────────────────────────────
+
+export interface EmailThread {
+  id:        string;
+  sailorId:  string;
+  from:      string;
+  subject:   string;
+  preview:   string;
+  date:      string;
+  tags:      string[];
+  grade?:    string;
+  category?: string;
+  prdDays?:  number;
+  archived?: boolean;
+  teamHistory?: boolean;
+  messages:  EmailMessage[];
 }
 
-export interface DashboardStats {
-  sailors_total:   number;
-  critical_rollers: number;
-  active_rollers:  number;
-  orders_in_qa:    number;
-  vacant_billets:  number;
+export interface EmailMessage {
+  from:    string;
+  role:    string;
+  body:    string;
+  date:    string;
 }
+
+// ── ANNOUNCEMENT ─────────────────────────────────────────────────────────────
+
+export interface Announcement {
+  id:        string;
+  title:     string;
+  body:      string;
+  category:  AnnouncementCategory;
+  audience:  AnnouncementAudience;
+  author:    string;
+  date:      string;
+  priority:  'HIGH' | 'NORMAL';
+  readCount: number;
+}
+
+// ── ANALYTICS ────────────────────────────────────────────────────────────────
 
 export interface FleetReadiness {
   fleet:    string;
-  fill_rate: number;
+  fillRate: number;
   trend:    number;
   critical: boolean;
+}
+
+export interface DashboardStats {
+  sailorsTotal:   number;
+  criticalRollers: number;
+  activeRollers:  number;
+  ordersInQa:     number;
+  vacantBillets:  number;
+}
+
+// ── AUDIT ─────────────────────────────────────────────────────────────────────
+
+export interface AuditEntry {
+  id:        string;
+  ts:        string;
+  userId:    string;
+  userName:  string;
+  userRole:  string;
+  action:    string;
+  entityType?: string;
+  entityId?:   string;
+}
+
+// ── API RESPONSE WRAPPER ──────────────────────────────────────────────────────
+
+export interface ApiResponse<T> {
+  data:    T;
+  success: boolean;
+  message?: string;
+}
+
+export interface PaginatedResponse<T> extends ApiResponse<T[]> {
+  total: number;
 }

@@ -4,21 +4,22 @@
  */
 
 import express from 'express';
-import cors    from 'cors';
-import morgan  from 'morgan';
-import path    from 'path';
+import cors from 'cors';
+import morgan from 'morgan';
+import path from 'path';
 
-import authRouter       from './routes/auth';
-import sailorsRouter    from './routes/sailors';
-import billetsRouter    from './routes/billets';
-import ordersRouter     from './routes/orders';
-import availsRouter     from './routes/avails';
-import messagesRouter   from './routes/messages';
-import analyticsRouter  from './routes/analytics';
+import authRouter from './routes/auth';
+import sailorsRouter from './routes/sailors';
+import billetsRouter from './routes/billets';
+import ordersRouter from './routes/orders';
+import availsRouter from './routes/avails';
+import messagesRouter from './routes/messages';
+import analyticsRouter from './routes/analytics';
 import announcementsRouter from './routes/announcements';
-import auditRouter      from './routes/audit';
+import auditRouter from './routes/audit';
+import debugRouter from './routes/debug';
 
-const app  = express();
+const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 // ── Middleware ─────────────────────────────────────────────────────────────────
@@ -27,25 +28,26 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // ── API Routes ─────────────────────────────────────────────────────────────────
-app.use('/api/auth',          authRouter);
-app.use('/api/sailors',       sailorsRouter);
-app.use('/api/billets',       billetsRouter);
-app.use('/api/orders',        ordersRouter);
-app.use('/api/avails',        availsRouter);
-app.use('/api/messages',      messagesRouter);
-app.use('/api/analytics',     analyticsRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/sailors', sailorsRouter);
+app.use('/api/billets', billetsRouter);
+app.use('/api/orders', ordersRouter);
+app.use('/api/avails', availsRouter);
+app.use('/api/messages', messagesRouter);
+app.use('/api/analytics', analyticsRouter);
 app.use('/api/announcements', announcementsRouter);
-app.use('/api/audit',         auditRouter);
+app.use('/api/audit', auditRouter);
+app.use('/api/debug', debugRouter);
 
 // ── Health ─────────────────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {
   res.json({
-    status:         'operational',
-    system:         'SIDECAR',
-    version:        '0.1.0',
-    runtime:        'Node.js + TypeScript',
+    status: 'operational',
+    system: 'SIDECAR',
+    version: '0.1.0',
+    runtime: 'Node.js + TypeScript',
     classification: 'UNCLASSIFIED // FOUO',
-    timestamp:      new Date().toISOString(),
+    timestamp: new Date().toISOString(),
   });
 });
 
