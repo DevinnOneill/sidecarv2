@@ -123,11 +123,32 @@ export const APPLICATIONS: Record<string, SailorApplication[]> = {
     { billetId: 'B002', command: 'NAS Jacksonville', date: '2026-01-22', status: 'SUBMITTED', detailer: 'J. Davis', notes: 'East Coast preference met' },
     { billetId: 'B003', command: 'NETC Pensacola', date: '2025-12-05', status: 'NOT_SELECTED', detailer: 'S. Johnson', notes: 'Selected another candidate' },
   ],
+  'S002': [
+    { billetId: 'B002', command: 'NAS Jacksonville', date: '2026-01-15', status: 'WITHDRAWN', detailer: 'J. Davis', notes: 'Withdrawn due to medical hold' },
+  ],
+  'S003': [
+    { billetId: 'B004', command: 'USS John C. Stennis', date: '2026-02-01', status: 'SUBMITTED', detailer: 'J. Davis', notes: 'Priority sea tour' },
+  ],
   'S005': [
     { billetId: 'B007', command: 'NIOC Hawaii', date: '2026-02-15', status: 'SUBMITTED', detailer: 'J. Davis', notes: 'Cross-rate request pending nec verification' },
     { billetId: 'B002', command: 'NAS Jacksonville', date: '2026-02-05', status: 'PENDING', detailer: 'J. Davis', notes: 'Prefers stay in local area' },
-  ]
+  ],
+  'S006': [
+    { billetId: 'B008', command: 'USS Constitution', date: '2026-02-20', status: 'SUBMITTED', detailer: 'R. Chen', notes: 'Local recruit preference' },
+  ],
+  'S008': [
+    { billetId: 'B010', command: 'COMSUBPAC', date: '2026-02-25', status: 'SUBMITTED', detailer: 'J. Davis', notes: 'Submarine community priority' },
+  ],
 };
+
+// Default apps for others
+SAILORS.forEach(s => {
+  if (!APPLICATIONS[s.id]) {
+    APPLICATIONS[s.id] = [
+      { billetId: 'B000', command: 'System Default', date: '2026-01-01', status: 'NOT_SELECTED', detailer: 'SYSTEM', notes: 'Auto-archived prior cycle history' }
+    ];
+  }
+});
 
 // ── ORDERS ────────────────────────────────────────────────────────────────────
 
@@ -258,5 +279,27 @@ export const EMAIL_THREADS: EmailThread[] = [
     messages: [
       { from: 'ITS2 O\'Malley', role: 'SAILOR', body: 'Detailer, following up on my previous HUMS request. I have uploaded the updated medical certification for my father. Please review as my PRD is in 5 days.', date: '2026-02-26T08:30:00' },
     ]
+  },
+  {
+    id: 'ET004', sailorId: 'S003', from: 'j.thompson@navy.mil', subject: 'Re: ORD-2026-0793 Return Status',
+    preview: 'Detailer, please see my comments on the funding line mismatch...',
+    date: 'Feb 24 2026', tags: ['E-6', 'IT1', 'Orders'], grade: 'E-6', category: 'ORDERS', prdDays: 145,
+    messages: [
+      { from: 'IT1 Thompson', role: 'SAILOR', body: 'Sir, I noticed the orders were returned. Is there something I need to do regarding my NEC qualification?', date: '2026-02-24T16:50:00' }
+    ]
   }
 ];
+
+// Add default welcome emails for others
+SAILORS.forEach(s => {
+  if (!EMAIL_THREADS.find(t => t.sailorId === s.id)) {
+    EMAIL_THREADS.push({
+      id: `ET-DEF-${s.id}`, sailorId: s.id, from: 'sidecar-system@navy.mil', subject: 'Welcome to SIDECAR Distribution Platform',
+      preview: 'Automated notification: Your record has been synchronized...',
+      date: 'Jan 01 2026', tags: ['SYSTEM'], grade: s.paygrade, category: 'SYSTEM', prdDays: 0,
+      messages: [
+        { from: 'SIDECAR', role: 'SYS', body: `Welcome ${s.lastName}. Your PRD (${s.prd}) has been synchronized from NSIPS. Please ensure your preferences are updated in MNA.`, date: '2026-01-01T08:00:00' }
+      ]
+    });
+  }
+});

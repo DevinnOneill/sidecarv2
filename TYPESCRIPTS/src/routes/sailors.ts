@@ -26,7 +26,7 @@ router.get('/:id', (req: Request, res: Response) => {
 
 router.get('/:id/applications', (req: Request, res: Response) => {
   const apps = APPLICATIONS[req.params.id] || [];
-  res.json({ success: true, data: apps, sailorId: req.params.id });
+  res.json({ success: true, data: { applications: apps }, sailorId: req.params.id });
 });
 
 router.get('/:id/emails', (req: Request, res: Response) => {
