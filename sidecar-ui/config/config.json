@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "sidecar-dashboard-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/sidecarDashboard/SidecarDashboardWebPart.js",
+          "manifest": "./src/webparts/sidecarDashboard/SidecarDashboardWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "SidecarDashboardWebPartStrings": "lib/webparts/sidecarDashboard/loc/{locale}.js"
+  }
+}

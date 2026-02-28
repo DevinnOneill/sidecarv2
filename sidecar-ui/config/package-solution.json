@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "sidecar-ui-client-side-solution",
+    "id": "1eca84e6-e08c-473b-b714-2c108037077c",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.20.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "sidecar-ui description"
+      },
+      "longDescription": {
+        "default": "sidecar-ui description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "sidecar-ui Feature",
+        "description": "The feature that activates elements of the sidecar-ui solution.",
+        "id": "c7961c75-0fa5-43c7-8b01-969f8869dc20",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/sidecar-ui.sppkg"
+  }
+}

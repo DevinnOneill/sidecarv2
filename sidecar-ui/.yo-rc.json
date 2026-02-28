@@ -1,0 +1,25 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "whichFolder": "subdir",
+    "solutionName": "sidecar-ui",
+    "environment": "spo",
+    "skipFeatureDeployment": true,
+    "componentType": "webpart",
+    "template": "react",
+    "componentName": "SidecarDashboard",
+    "componentDescription": "Sidecar Dashboard Web Part",
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "18.20.8",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.24.0"
+    },
+    "version": "1.20.0",
+    "libraryName": "sidecar-ui",
+    "libraryId": "1eca84e6-e08c-473b-b714-2c108037077c",
+    "packageManager": "npm",
+    "solutionShortDescription": "sidecar-ui description",
+    "isDomainIsolated": false
+  }
+}
