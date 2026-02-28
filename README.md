@@ -1,51 +1,49 @@
 # 🚢 SIDECAR — Navy Distribution Automation
 
-SIDECAR is a modern, TypeScript-based platform designed to automate and streamline Navy personnel distribution and order management. It integrates sailor readiness data, billet inventory, and complex policy engines into a single "glass-floor" dashboard.
+SIDECAR is a modern web platform designed to automate and streamline Navy personnel distribution and order management. It integrates sailor readiness data, billet inventory, and complex policy engines into a single "glass-floor" dashboard.
 
-## 🚀 Quick Start
+## 🏗️ Project Architecture (V2)
 
-### Prerequisites
-- **Node.js**: v18 or higher
-- **NVM**: (Optional) Recommended for version management
+The project has recently migrated from a standalone Node.js server to a native **Microsoft 365 SharePoint Framework (SPFx) React Application**.
 
-### Installation & Run
-1. **Setup**: Run the setup script to install dependencies and verify your environment.
-   ```bash
-   ./setup.sh
-   ```
-2. **Launch**: Start the development server and open the app in your browser automatically.
-   ```bash
-   ./run.sh
-   ```
-
-## 🏗️ Project Structure
+### Directory Structure
 
 ```text
 sidecar-v2
-└── TYPESCRIPTS
-    ├── src
-    │   ├── server.ts      # Express entry point & middleware
-    │   ├── data/          # Mock Data Store (The "Brain")
-    │   ├── routes/        # API Endpoints (Sailors, Billets, Orders, etc.)
-    │   └── types/         # Shared TypeScript Interfaces
-    ├── frontend
-    │   ├── index.html     # Login & Entry
-    │   ├── css/           # Modern Glassmorphism Styles
-    │   └── js/
-    │       ├── app.js     # Main UI Controller
-    │       ├── api.js     # Shared API Client
-    │       └── modules/   # Feature-specific logic (Home, Sailors, Analytics)
-    └── shared/            # Types shared across Frontend & Backend
+├── sidecar-ui/              # 🟢 ACTIVE: The SPFx React Web Part
+│   ├── src/                 # React components, PnP JS data layer, and business logic
+│   ├── docs/                # Project documentation (e.g., Personas)
+│   └── package.json         # SPFx Dependencies (Requires Node v18)
+│
+└── _legacy_sidecar_v2/      # 🔴 DEPRECATED: Historical Reference Only
+    ├── src/routes/          # Contains the original Policy Engine logic (JTRS, EAOS, NEC)
+    └── frontend/            # The original vanilla JS/HTML views
 ```
 
-## 🛠️ Technology Stack
-- **Backend**: Node.js, Express, TypeScript, Morgan (Logging)
-- **Frontend**: Vanilla JS (ES6+), Modern CSS (no frameworks for speed/control)
-- **Tooling**: `ts-node-dev` for hot-reloading development
+## 🚀 Quick Start (Active Project)
 
-## 🧪 Demo Data
-The app is pre-loaded with **10 sailors**, **10 billets**, and a full **Orders/Activity history**. 
-- **Main Demo User**: `D001` (J. Davis - Detailer)
-- **Debug Path**: Visit `/api/debug` to see raw data states.
+To develop on the active Sidecar application, you must work inside the `sidecar-ui` directory. 
+
+**CRITICAL REQUIREMENT:** You must use **Node.js v18.x** to build and run the SPFx frontend. Node v20+ is not supported by Microsoft's build tools.
+
+1. Navigate to the active UI directory:
+   ```bash
+   cd sidecar-ui
+   ```
+2. Switch to Node 18 (using NVM):
+   ```bash
+   nvm use 18
+   ```
+3. Start the local development server:
+   ```bash
+   gulp serve
+   ```
+4. Open your SharePoint tenant's Hosted Workbench to test the web part:
+   `https://<your-tenant>.sharepoint.com/_layouts/15/workbench.aspx`
+
+## 📖 Documentation
+
+For detailed information on the design system, data integration, and how AI agents should interact with this repository, please read the [Sidecar UI Personas](sidecar-ui/docs/personas.md).
 
 ---
+*Questions? Contact PERS-40 Development Team.*
